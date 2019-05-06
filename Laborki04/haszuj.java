@@ -20,18 +20,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JFrame;
 
-/**
+/** Podstawowa Klasa haszuj z podstawowymi metodami służaca do dziediczenia przez kolejne klasy
  *
- * @author Lenovo
+ * 
  */
 public class haszuj extends JFrame{
     String tabHasz[] = new String [20000];
-    int h;
-    int j, wybor;
+    int h,j; // zmienne przechowująca wartosc klucza haszującego
+    int  wybor; // zmienna obsługująca wybór funkcji haszującej jeśli =1 działa 1 funkcja jesli =2 działa 2 funkcja 
     String slowo;
    int zliczam=0;
     public ArrayList<String> slownik = new ArrayList<String>();
-    // Funkcja wczytująca plik txt z okna dialogowego do arraylisty
+    // Konstruktor wczytująca plik txt z okna dialogowego do arraylisty
     haszuj() throws FileNotFoundException 
     {
         Frame a = new Frame ("Okno wyboru pliku");
@@ -65,6 +65,7 @@ System.out.println("Ścieżka: "+ katalog + plik);
               File plikWygrane = new File(plik);
         Scanner odczyt = new Scanner(plikWygrane);
         
+        // Pętla wczytująca slowa do arrayListy
         while (odczyt.hasNextLine()) // petla while bedzie sie wykonywac do konca pliku
         {
             slownik.add(odczyt.nextLine());
@@ -76,14 +77,21 @@ System.out.println("Ścieżka: "+ katalog + plik);
                 tabHasz[i] = "";
     }  //  koniec wczytaj slownik
     
-    int Hasz1(String slowo)
+    // metoda czyszcząca tablice rozproszoną
+    void wyczyscHaszTab()
+    {
+        // Zerujemy tablicę haszowaną
+            for(int i = 0; i < tabHasz.length; i++) 
+                tabHasz[i] = "";
+    }
+    int Hasz1(String slowo) // 1 funkcja z zadania
     {
         h=0;
         for(int i=0; i < slowo.length(); i++)
         h +=( int ) slowo.charAt(i);
         return h % tabHasz.length;
     }
-    int Hasz2(String slowo)
+    int Hasz2(String slowo) // 2 funkcja z zadania
     {
         h= 5381;
         for(int i=0; i < slowo.length(); i++)
@@ -91,7 +99,8 @@ System.out.println("Ścieżka: "+ katalog + plik);
         return  h % tabHasz.length;
     }
   
-    int wybor(int n)
+    //metoda wyboru z obsługa wyjątków 
+    int wybor(int n) 
     {
         Scanner odczyt = new Scanner(System.in);
         do{
@@ -106,10 +115,13 @@ System.out.println("Ścieżka: "+ katalog + plik);
         }while(n!=1 || n!=2);
             return n;
     }
+    //######################################
+    // Metoda tworząca tablice haszującą
+    // tworzą ją zapomcą wcześniej wybranego słownika z pliku ktore jest zapisany do tablicy dynamicznej 
     void makeHaszTab (ArrayList slownik)
     {
         System.out.println("której funkcji użyć hasz1 - 1 czy hasz2 - 2");
-        wybor = wybor(3);
+        wybor = wybor(3); // przypisanie zmiennej wybór ktora ustala nam na jakiej funkcji haszującej będziemy operować 
 
          // zaczynamy wypełnianie tablicy
          for(int i = 0; i < slownik.size(); i++)
@@ -119,7 +131,7 @@ System.out.println("Ścieżka: "+ katalog + plik);
             h = Hasz1(slowo);
             if(wybor==2)
             h= Hasz2(slowo);    
-            System.out.println("wynik klucza to " + h );
+//            System.out.println("wynik klucza to " + h );
             j = h;
             while(true)
             {
@@ -133,13 +145,15 @@ System.out.println("Ścieżka: "+ katalog + plik);
                   System.out.println("Wykryto Duplikat");
                   break;
               }
-              j = (j + 1) % tabHasz.length;
+              j = (j + 1) % tabHasz.length; // sondowanie liniowe
               if(j == h) break;
             }
          }
         
 
     }// koniec makeHaszTab
+    
+    // metoda dodająca pojedyncze słowo do obecnej tablicy haszującej ma zapamiętany wybor funkcji haszującej
         void setHaszTab(String tekst)
     {
             zliczam =0;
@@ -148,14 +162,14 @@ System.out.println("Ścieżka: "+ katalog + plik);
             h = Hasz1(slowo);
             if(wybor==2)
             h= Hasz2(slowo);
-            System.out.println("wynik klucza to " +h);
+//            System.out.println("wynik klucza to " +h);
             j = h;
-            System.out.println("slowo do wstawienia to " +tekst);
+//            System.out.println("slowo do wstawienia to " +tekst);
             while(true)
             {
               if(tabHasz[j] == "")
               {
-                  System.out.println("Wstawiam do indeksu " +j + "ilosc petli " + zliczam);
+//                  System.out.println("Wstawiam do indeksu " +j + "ilosc petli " + zliczam);
                 tabHasz[j] = tekst;
                 break;
               }
@@ -170,6 +184,7 @@ System.out.println("Ścieżka: "+ katalog + plik);
               zliczam++;
             }
     }
+        // metodą pokazująca indeks wskazanego pojedynczego slowa
         void getHasztab(String tekst)
         {
             slowo = tekst;
@@ -200,10 +215,14 @@ System.out.println("Ścieżka: "+ katalog + plik);
               ilosPetliWhile++;
             }
         }
+        
+        // metoda pomoniczna pokazująca slowo w zadanym indeksie
         void getIndek(int n)
         {
             System.out.println("pozycja na danym ideksie to " + tabHasz[n]);
         }
+        
+        // metoda usuwające plik z tablicą haszującą 
      public void DeleteFile(String path) // metoda usuwająca plik 
 {
     try{
@@ -227,6 +246,7 @@ System.out.println("Ścieżka: "+ katalog + plik);
          for(int i =0; i< tabHasz.length; i++)
          System.out.println(tabHasz[i]);
      }
+     // metoda zapisujaca nową tablice haszującą 
     void SaveHasztab()
     {
         

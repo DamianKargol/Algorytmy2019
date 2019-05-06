@@ -22,32 +22,69 @@ public class TablicaHash {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws FileNotFoundException {
-//        haszuj slowa = new haszuj();
-//        slowa.makeHaszTab(slowa.slownik);
-//        Scanner odczyt = new Scanner(System.in);
-//        String tekst = odczyt.nextLine();
-//        slowa.setHaszTab(tekst);
-//         Scanner odczyt1 = new Scanner(System.in);
-//        String tekst1 = odczyt1.nextLine();
-//        slowa.getHasztab(tekst1);
-//        
-//        slowa.getIndek(odczyt.nextInt());
-//        
-//        slowa.SaveHasztab();
+
+        doswiadczenie d = new doswiadczenie(); // inicjowanie obiektu
+            Scanner odczyt = new Scanner(System.in);
+            Scanner odczyt1 = new Scanner(System.in);
         
-//        podwojneRozpraszanie podwojne = new podwojneRozpraszanie();
-//        podwojne.makeHaszTab(podwojne.slownik);
-//        Scanner odczyt = new Scanner(System.in);
-//        String tekst = odczyt.nextLine();
-//        podwojne.setHaszTab(tekst);
-//        Scanner odczyt1 = new Scanner(System.in);
-//        String tekst1 = odczyt1.nextLine();
-//        podwojne.getHasztab(tekst1);
-        doswiadczenie d = new doswiadczenie();
-        d.tabHaszSize(5000);
-        d.test();
-        d.Srednia();
-        d.SaveHasztab();
+        // Prostoe Menu
+        int m;
+        while(true)
+        {
+        System.out.println("Menu");
+        System.out.println("1 - Stworz tablice haszującą  w oparciu o Haszowanie Liniowe");
+        System.out.println("2 - Stwórz tablice Haszująca w oparaciu o  sondowanie rozproszone");
+        System.out.println("3 - Doświadczenia mierzące średnią ilosć operacji z wstawienia  100 słow do tablicy");
+        m = odczyt.nextInt();
+        if(m==1)
+        {
+           
+            d.makeHaszTab(d.slownik);
+             while(true)
+            {
+                System.out.println("");
+                System.out.println("Wstaw słowo - 1 || Wyszukaj - 2 || 3 - Wyjdź");
+                int m1= odczyt.nextInt();
+                    if(m1==1)
+                    {
+                        System.out.println("Podaj słowo");
+                        String tekst = odczyt1.nextLine();
+                        
+                        d.setHaszTab(tekst);
+                    }
+                           if(m1==2)
+                    {
+                        System.out.println("Podaj słowo");
+                        String tekst = odczyt1.nextLine();
+                        d.getHasztab(tekst);
+                    }
+                    if(m1==3) 
+                        break;
+                    }    
+            
+        }
+        if(m==3)
+        {
+            while(true)
+            {
+            System.out.println("");
+            System.out.println("Podaj wielkosć tablicy Haszującej");
+            int n = odczyt.nextInt();
+                    d.tabHaszSize(n);
+                    d.test();
+                    d.Srednia();
+                    System.out.println("Nacisnij 0 aby wyjsc 1 kontynuuj");
+                    m = odczyt.nextInt();
+                    if(m==0)
+                        break;
+            }
+        }
+        
+        System.out.println("Nacisnij 0 aby wyjsc 1 konynuuj");
+         m = odczyt.nextInt();
+         if (m==0) 
+             break;
     }
-    
+        
+    }
 }

@@ -8,22 +8,20 @@ package tablicahash;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-/**
+/** Klasa która dziedziczy po klasie haszuj i służy do podwojnego rozpraszania
  *
- * @author Lenovo
+ * 
  */
 public class podwojneRozpraszanie extends haszuj {
     int k=0;
     podwojneRozpraszanie () throws FileNotFoundException
     {
-        super();
+        super(); // wywołanie konstruktora klasy nadrzędnej 
     }
     
-    int HaszDodatkowy(int klucz, int k)
+    int HaszDodatkowy(int klucz, int k) // podwojne rozpraszanie z którym jest problem :) 
     {
-        h=0;
-       
-        h = (klucz + k*klucz%7)% tabHasz.length;;
+        h = (klucz + k*3)% tabHasz.length;;
         return h;
     }
     void makeHaszTabRozp (ArrayList slownik)
@@ -38,13 +36,15 @@ public class podwojneRozpraszanie extends haszuj {
             h = Hasz1(slowo);
             if(wybor==2)
             h= Hasz2(slowo);    
-            System.out.println("wynik klucza to " + h );
+//            System.out.println("wynik klucza to " + h );
             j = h;
+            k=0;
             while(true)
             {
               if(tabHasz[j] == "")
               {
                 tabHasz[j] = slowo;
+                            System.out.println("wynik klucza ostatecznego  to " + j );
                 break;
               }
               if(tabHasz[j].equals(slowo) == true)
@@ -66,14 +66,14 @@ public class podwojneRozpraszanie extends haszuj {
             h = Hasz1(slowo);
             if(wybor==2)
             h= Hasz2(slowo);
-            System.out.println("wynik klucza to " +h);
+//            System.out.println("wynik klucza to " +h);
             j = h;
-            System.out.println("slowo do wstawienia to " +tekst);
+//            System.out.println("slowo do wstawienia to " +tekst);
             while(true)
             {
               if(tabHasz[j] == "")
               {
-                  System.out.println("Wstawiam do indeksu " +j + "ilosc petli " + c);
+//                  System.out.println("Wstawiam do indeksu " + j + "ilosc petli " + c);
                 tabHasz[j] = tekst;
                 break;
               }
@@ -89,14 +89,14 @@ public class podwojneRozpraszanie extends haszuj {
               c++;
             }
     }
-        void getHasztab(String tekst)
+        void getHasztabRozp(String tekst)
         {
             slowo = tekst;
             if(wybor ==1)
             h = Hasz1(slowo);
             if(wybor==2)
             h= Hasz2(slowo);
-            System.out.println("wynik klucza dla slowa " + slowo + " = " + h);
+            
             j = h;
             
             int ilosPetliWhile = 0;

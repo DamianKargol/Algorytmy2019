@@ -8,36 +8,42 @@ package tablicahash;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-/**
- *
- * @author Lenovo
+/** Klasa doswiadczenie która Dziediczy po klasie podwojneRozpraszanie
+ *  Klasa na której będziemy operować 
+ *  Posiada dodatkowe metody potrzebne do wykonania doświadczenia 
+ * 
  */
 public class doswiadczenie extends podwojneRozpraszanie {
     int rozmiar=0;
     double srednia;
-      public ArrayList<String> tempSlownik = new ArrayList<String>();
-      public ArrayList<Integer> tabZliczam = new ArrayList<Integer>();
+    // tymczasowa lista słów na której będziemy operowac
+      public ArrayList<String> tempSlownik = new ArrayList<String>(); 
+      // tablica dynamiczna która przechowują nam liczbe operacji wstawiania
+      public ArrayList<Integer> tabZliczam = new ArrayList<Integer>(); 
      doswiadczenie() throws FileNotFoundException
      {
-        super();
+        super(); // odwłoanie sie do klasy nadrzędnej
       
      }
-     void tabHaszSize(int n)
+     // Metoda tworzy nam podaną wielkość tablicy ze słowami z wczytanego wcześniej pliku 
+     void tabHaszSize(int n)  
      {
-         rozmiar =n;
+         rozmiar =n; // iloć słów do wczytania 
          tempSlownik.removeAll(tempSlownik);
-        for (int i = 0; i<n; i++)
+         // wczytuje podaną ilość słó
+        for (int i = 0; i<n; i++) 
             tempSlownik.add(slownik.get(i));
         
          System.out.println("Wielkość slownika " + tempSlownik.size());
          
      }
-     
-     void test()
+     // Metoda wykonująca test wstawiania do obecnej tablicy rozproszonej 1000 ostatnich slow z pliku
+     void test() 
      {
-         makeHaszTab(tempSlownik);
+         wyczyscHaszTab(); // funkcja czysci nam tablice rozproszoną przed nastepnym testem
+         makeHaszTab(tempSlownik);  // metoda wypelnia tablice rozproszoną wslazaną wczesniej ilością slow
         
-         for(int i = slownik.size()-1; i>= slownik.size()- 1001; i--)
+         for(int i = slownik.size()-1; i>= slownik.size()- 1001; i--) // pętla wstawia do tablicy rozproszonej 1000 ostanich slow z pliku
          {
              setHaszTab(slownik.get(i));
              tabZliczam.add(zliczam);
@@ -45,13 +51,17 @@ public class doswiadczenie extends podwojneRozpraszanie {
          Integer sum = 0;
  
      }
+     // Metoda obliczająca średnią ilośc operacji podczas wstawiania slow do tablicy
+     // za pomocą tablicy dynamicznej tabZliczam
      void Srednia()
      {
          int suma=0;
-        for( int i=0; i< tabZliczam.size(); i++)
+         // pętla licząca sumę elementów w tablicy tabZliczam
+        for( int i=0; i< tabZliczam.size(); i++) 
             suma+= tabZliczam.get(i);
-        srednia = (double)suma/tabZliczam.size();
+        srednia = (double)suma/tabZliczam.size(); // szybkie policzenia średniej 
          System.out.println("Srednia ilośc operacji przy wstawieniu 1000 slow " + srednia);    
+         tabZliczam.removeAll(tabZliczam); // zeruje tablicy aby była gotowa na nastepne dosiwadczenie 
      }
      
      
