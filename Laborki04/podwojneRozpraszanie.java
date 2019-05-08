@@ -19,32 +19,43 @@ public class podwojneRozpraszanie extends haszuj {
         super(); // wywołanie konstruktora klasy nadrzędnej 
     }
     
-    int HaszDodatkowy(int klucz, int k) // podwojne rozpraszanie z którym jest problem :) 
+    int Hasz3(String tekst)
     {
-        h = (klucz + k*3)% tabHasz.length;;
+        return (1 + Hasz2(tekst)%(tabHasz.length -1111))%tabHasz.length;
+    }
+    int HaszDodatkowy(int k,String tekst) // podwojne rozpraszanie z którym jest problem :) 
+    {
+        h =(( Hasz1(tekst) + (k*Hasz3(tekst))) % tabHasz.length);;
+        return h;
+    }
+     int HaszDodatkowy2(int k,String tekst) // podwojne rozpraszanie z którym jest problem :) 
+    {
+        h =(( Hasz2(tekst) + (k*Hasz3(tekst))) % tabHasz.length);;
         return h;
     }
     void makeHaszTabRozp (ArrayList slownik)
     {
          System.out.println("której funkcji użyć hasz1 - 1 czy hasz2 - 2");
-        wybor = wybor(3);
-        // zaczynamy wypełnianie tablicy
+        wybor = wybor(3); // wybor glownej funkcji haszującej 
+         //zaczynamy wypełnianie tablicy
          for(int i = 0; i < slownik.size(); i++)
          {
             slowo = (String) slownik.get(i);
             if(wybor ==1)
-            h = Hasz1(slowo);
+            h = HaszDodatkowy(k,slowo)% tabHasz.length;
             if(wybor==2)
-            h= Hasz2(slowo);    
+            h= HaszDodatkowy2(k,slowo)% tabHasz.length;    
+            k=0;
+           
 //            System.out.println("wynik klucza to " + h );
             j = h;
-            k=0;
+            
             while(true)
             {
               if(tabHasz[j] == "")
               {
                 tabHasz[j] = slowo;
-                            System.out.println("wynik klucza ostatecznego  to " + j );
+//                            System.out.println("wynik klucza ostatecznego  to " + j );
                 break;
               }
               if(tabHasz[j].equals(slowo) == true)
@@ -52,20 +63,23 @@ public class podwojneRozpraszanie extends haszuj {
                   System.out.println("Wykryto Duplikat");
                   break;
               }
-              j = HaszDodatkowy(h,k) % tabHasz.length;
               k++;
+              j = Math.abs(HaszDodatkowy(k,slowo)) % tabHasz.length;
+//                System.out.println("klucz po wyjsciu " + j);
               if(j == h) break;
+             
             }
          }
     }
     void setHaszTabRozp(String tekst)
     {
             int c=0;
+            k=0;
             slowo = tekst;
             if(wybor ==1)
-            h = Hasz1(slowo);
+            h = HaszDodatkowy(k,slowo)% tabHasz.length;;
             if(wybor==2)
-            h= Hasz2(slowo);
+            h= HaszDodatkowy2(k,slowo)% tabHasz.length;
 //            System.out.println("wynik klucza to " +h);
             j = h;
 //            System.out.println("slowo do wstawienia to " +tekst);
@@ -73,7 +87,7 @@ public class podwojneRozpraszanie extends haszuj {
             {
               if(tabHasz[j] == "")
               {
-//                  System.out.println("Wstawiam do indeksu " + j + "ilosc petli " + c);
+                  System.out.println("Wstawiam do indeksu " + j + "ilosc petli " + c);
                 tabHasz[j] = tekst;
                 break;
               }
@@ -83,19 +97,21 @@ public class podwojneRozpraszanie extends haszuj {
                   break;
               }
                 ;
-             j = HaszDodatkowy(h,k) % tabHasz.length;
-              k++;
+                k++;
+             j = HaszDodatkowy(k,slowo) % tabHasz.length;
+              
               if(j == h) break;
-              c++;
+              c++; // zlicza ilosc petli
             }
     }
         void getHasztabRozp(String tekst)
         {
             slowo = tekst;
+            k=0; 
             if(wybor ==1)
-            h = Hasz1(slowo);
+            h = HaszDodatkowy(k,slowo)% tabHasz.length;
             if(wybor==2)
-            h= Hasz2(slowo);
+            h= HaszDodatkowy2(k,slowo)% tabHasz.length;
             
             j = h;
             
@@ -113,9 +129,9 @@ public class podwojneRozpraszanie extends haszuj {
                     System.out.println("Ilosc operacji " + ilosPetliWhile);
                     break;
               }
-
-              j = HaszDodatkowy(h,k) % tabHasz.length;
               k++;
+              j = HaszDodatkowy(k,slowo) % tabHasz.length;
+              
               if(j == h) break;
               ilosPetliWhile++;
             }

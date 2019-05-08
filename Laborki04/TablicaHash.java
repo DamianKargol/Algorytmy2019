@@ -27,13 +27,15 @@ public class TablicaHash {
             Scanner odczyt = new Scanner(System.in);
             Scanner odczyt1 = new Scanner(System.in);
         
+      
+      
         // Prostoe Menu
         int m;
         while(true)
         {
         System.out.println("Menu");
-        System.out.println("1 - Stworz tablice haszującą  w oparciu o Haszowanie Liniowe");
-        System.out.println("2 - Stwórz tablice Haszująca w oparaciu o  sondowanie rozproszone");
+        System.out.println("1 - Stworz tablice Rozproszoną  w oparciu o sondowanie Liniowe");
+        System.out.println("2 - Stwórz tablice Rozproszoną w oparaciu o  sondowanie z podwojnym rozpraszaniem");
         System.out.println("3 - Doświadczenia mierzące średnią ilosć operacji z wstawienia  100 słow do tablicy");
         m = odczyt.nextInt();
         if(m==1)
@@ -63,6 +65,35 @@ public class TablicaHash {
                     }    
             
         }
+        
+        if(m==2)
+        {
+           
+            d.makeHaszTabRozp(d.slownik);
+             while(true)
+            {
+                System.out.println("");
+                System.out.println("Wstaw słowo - 1 || Wyszukaj - 2 || 3 - Wyjdź");
+                int m1= odczyt.nextInt();
+                    if(m1==1)
+                    {
+                        System.out.println("Podaj słowo");
+                        String tekst = odczyt1.nextLine();
+                        
+                        d.setHaszTabRozp(tekst);
+                    }
+                           if(m1==2)
+                    {
+                        System.out.println("Podaj słowo");
+                        String tekst = odczyt1.nextLine();
+                        d.getHasztabRozp(tekst);
+                    }
+                    if(m1==3) 
+                        break;
+                    }    
+            
+        }
+        
         if(m==3)
         {
             while(true)
@@ -85,6 +116,6 @@ public class TablicaHash {
          if (m==0) 
              break;
     }
-        
+              d.SaveHasztab();
     }
 }
