@@ -117,5 +117,6 @@ public class TablicaHash {
              break;
     }
               d.SaveHasztab();
+              System.exit(3);
     }
 }
